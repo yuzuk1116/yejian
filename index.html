@@ -1,191 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f7f3eb">
-<title>页间 · 和一个懂你的 AI 一起读</title>
-<style>
-:root{--bg:#f5f8fc;--paper:#ffffff;--ink:#101827;--muted:#718096;--line:#dbe5f2;--dark:#2563eb;--soft:#eaf2ff}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink)}
-body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Noto Sans SC",sans-serif}
-button{font:inherit} .app{min-height:100vh}.shell{max-width:780px;margin:auto;min-height:100vh;background:var(--paper);box-shadow:0 0 60px rgba(40,30,20,.06)}
-.top{height:64px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);z-index:10}
-.logo{font-family:Georgia,"Songti SC",serif;font-size:22px;letter-spacing:3px;color:#2563eb}.top button{border:0;background:none;color:var(--muted);cursor:pointer}
-.screen{padding:34px 24px 150px}.library-title{font-family:Georgia,"Songti SC",serif;font-size:30px;font-weight:500;margin:12px 0 24px}
-.book{border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;gap:15px;align-items:center;cursor:pointer;background:#ffffff}.cover{width:66px;height:92px;border-radius:6px;background:#111827;color:#fff;display:grid;place-items:center;text-align:center;font-family:Georgia,"Songti SC",serif;line-height:1.45}.book small{color:var(--muted);display:block;margin-top:6px}
-.reader{max-width:660px;margin:auto}.meta{text-align:center;color:var(--muted);font-size:11px;letter-spacing:2px;margin:8px 0 26px}.reader h1{text-align:center;font-family:Georgia,"Songti SC",serif;font-size:29px;font-weight:500;margin:0 0 34px}.prose{font-family:Georgia,"Songti SC","Noto Serif SC",serif;font-size:19px;line-height:2.08}.prose p{margin:0 0 24px}
-.hint{text-align:center;color:#aaa399;font-size:12px;margin-top:45px}
-.ai-fab{position:fixed;display:none;z-index:30;border:0;background:#2563eb;color:#fff;padding:9px 13px;border-radius:999px;box-shadow:0 8px 22px rgba(0,0,0,.2);font-size:13px;transform:translate(-50%,-120%);cursor:pointer}
-.ai-fab.show{display:block}
-.card{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);width:min(690px,calc(100% - 24px));background:rgba(255,255,255,.98);border:1px solid var(--line);border-radius:22px;padding:17px;box-shadow:0 16px 50px rgba(45,35,25,.16);z-index:25;display:none}.card.show{display:block;animation:up .2s ease}
-@keyframes up{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
-.aihead{display:flex;align-items:center;gap:10px;margin-bottom:10px}.avatar{width:35px;height:35px;border-radius:50%;background:#dbeafe;display:grid;place-items:center}.name{font-weight:600;font-size:14px}.role{font-size:11px;color:var(--muted);margin-top:2px}.message{font-size:15px;line-height:1.65;margin:6px 0 14px}.actions{display:flex;gap:9px}.actions button{flex:1;border:1px solid var(--line);border-radius:12px;background:#fffffffff;padding:10px;cursor:pointer;font-size:13px}.actions .primary{background:var(--dark);color:#fff;border-color:var(--dark)}
-.reply{display:none;margin-top:10px}.reply textarea{width:100%;height:70px;border:1px solid var(--line);border-radius:12px;padding:10px;resize:none;background:#ffffff;font-size:14px}.reply button{width:100%;margin-top:7px;border:0;border-radius:11px;padding:10px;background:var(--dark);color:#fff}
-.sheet-bg{position:fixed;inset:0;background:rgba(25,22,18,.35);z-index:40;display:none;align-items:flex-end}.sheet-bg.show{display:flex}.sheet{background:var(--paper);width:100%;max-width:780px;margin:auto;border-radius:24px 24px 0 0;padding:23px;max-height:82vh;overflow:auto}.sheet h2{font:500 24px Georgia,"Songti SC",serif;margin:0 0 5px}.sheet p{color:var(--muted);font-size:12px;margin:0 0 18px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.persona{border:1px solid var(--line);background:#ffffff;border-radius:14px;padding:13px;text-align:left;cursor:pointer}.persona b{display:block}.persona span{font-size:11px;color:var(--muted);display:block;margin-top:4px}.close{width:100%;border:0;background:var(--soft);border-radius:12px;padding:11px;margin-top:12px}
-@media(max-width:480px){.screen{padding-left:21px;padding-right:21px}.prose{font-size:18px;line-height:2.02}.reader h1{font-size:27px}.grid{grid-template-columns:1fr}}
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>页间｜遇见在文字之间</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="app"><main class="shell">
-<header class="top"><button id="back">‹</button><div class="logo">页间</div><button id="themeBtn">主题</button><button id="personaBtn">陪读</button></header>
+<header>页间 <small>遇见在文字之间</small></header>
 
-<section class="screen" id="library">
-  <div class="library-title">我的书架</div>
-  <div class="book" id="openBook">
-    <div class="cover">在文字<br>之间</div>
-    <div><b>在文字之间</b><small>示例作品 · 点击继续阅读</small></div>
-  </div>
-</section>
-
-<section class="screen" id="reader" style="display:none">
-  <article class="reader">
-    <div class="meta">CHAPTER 01 · 示例阅读</div>
-    <h1>在文字之间</h1>
-    <div class="prose" id="prose">
-      <p>夜色慢慢落下来，街道上的声音一盏一盏地熄灭。她站在窗边，看着最后一辆车消失在远处。</p>
-      <p>她忽然意识到，自己等待的或许从来不是那个人，而是一个能够让她相信，生活会朝着另一个方向走去的理由。</p>
-      <p>这个念头让她有些难过，却也奇怪地轻松。她第一次明白，有些离开并不是失去。</p>
-      <p>她关上窗，重新坐回桌前。书还摊在那里，刚才读到的那一页被风吹得轻轻翻动。</p>
-      <p>她没有再回头。</p>
-    </div>
-    <div class="hint">长按或拖动框选任意文字 → 点击「✨ AI陪读」</div>
-  </article>
-</section>
-
-<button class="ai-fab" id="aiFab">✨ AI陪读</button>
-
-<section class="card" id="aiCard">
-  <div class="aihead"><div class="avatar" id="avatar">☕</div><div><div class="name" id="aiName">温柔读书搭子</div><div class="role">你的陪读</div></div></div>
-  <div class="message" id="message"></div>
-  <div class="actions" id="actions"><button class="primary" id="continue">继续阅读</button><button id="reply">回复</button></div>
-  <div class="reply" id="replyBox"><textarea id="replyText" placeholder="说说你的想法……"></textarea><button id="send">发送</button></div>
-</section>
-
-<div class="sheet-bg" id="sheetBg"><div class="sheet">
-  <h2>选择你的陪读</h2><p>基础人格可以直接使用，也可以之后加入自己的 Prompt。</p>
-  <div class="grid">
-    <button class="persona" data-name="温柔读书搭子" data-icon="☕"><b>☕ 温柔读书搭子</b><span>细腻、温柔，偶尔分享感受</span></button>
-    <button class="persona" data-name="毒舌评论家" data-icon="🪶"><b>🪶 毒舌评论家</b><span>敢吐槽，也敢和你争论</span></button>
-    <button class="persona" data-name="文学教授" data-icon="📚"><b>📚 文学教授</b><span>关注结构、隐喻和人物</span></button>
-    <button class="persona" data-name="英语陪读" data-icon="🇺🇸"><b>🇺🇸 英语陪读</b><span>适合英文原著，解释自然表达</span></button>
-  </div>
-  <button class="close" id="closeSheet">先不选</button>
-</div></div>
-</main></div>
-
-<script>
-const $=id=>document.getElementById(id);
-let persona='温柔读书搭子', icon='☕', selectedText='';
-
-function messageFor(){
-  if(persona==='毒舌评论家') return '好吧，这一句我有点不同意。她说的是离开不是失去，但我觉得她可能只是在给自己找一个体面的解释。';
-  if(persona==='文学教授') return '这里值得停一下。作者把“离开”写成一种主动选择，而不是被动失去，这其实改变了整段话的情绪。';
-  if(persona==='英语陪读') return 'I like this part. The idea of “leaving” here feels less like loss and more like choosing to move forward.';
-  return '这一段我其实挺喜欢的。它不像是在说“离开”，更像是在说：有时候，我们终于允许自己往前走了。';
-}
-
-function positionFab(){
-  const sel=window.getSelection();
-  if(!sel || sel.isCollapsed || !sel.toString().trim() || !$('reader') || $('reader').style.display==='none'){
-    $('aiFab').classList.remove('show'); return;
-  }
-  selectedText=sel.toString().trim();
-  const r=sel.getRangeAt(0).getBoundingClientRect();
-  if(!r.width && !r.height)return;
-  $('aiFab').style.left=(r.left+r.width/2)+'px';
-  $('aiFab').style.top=Math.max(70,r.top+window.scrollY-window.scrollY)+'px';
-  $('aiFab').classList.add('show');
-}
-document.addEventListener('selectionchange',()=>setTimeout(positionFab,60));
-document.addEventListener('touchend',()=>setTimeout(positionFab,100));
-document.addEventListener('mouseup',()=>setTimeout(positionFab,60));
-
-$('aiFab').onclick=()=>{
-  $('aiFab').classList.remove('show');
-  $('message').textContent=messageFor();
-  $('aiCard').classList.add('show');
-  $('replyBox').style.display='none';
-  $('actions').style.display='flex';
-};
-
-$('continue').onclick=()=>{
-  $('message').textContent='好啦，我继续看了。';
-  $('actions').style.display='none';
-  setTimeout(()=>{$('message').textContent= persona==='毒舌评论家'?'行，不打扰你了。继续看吧。':persona==='文学教授'?'好，我们继续。后面这一段值得留意。':persona==='英语陪读'?'Okay, let’s keep reading.':'好呀，那我们继续。';},500);
-  setTimeout(()=>{$('aiCard').classList.remove('show');$('actions').style.display='flex';window.getSelection()?.removeAllRanges()},1500);
-};
-$('reply').onclick=()=>{$('replyBox').style.display='block';$('replyText').focus()};
-$('send').onclick=()=>{
-  if(!$('replyText').value.trim())return;
-  $('message').textContent='嗯，我懂你的意思。那我们继续往下读，看看后面的文字会不会支持你的判断。';
-  $('replyText').value='';$('replyBox').style.display='none';
-};
-
-$('openBook').onclick=()=>{$('library').style.display='none';$('reader').style.display='block';};
-$('back').onclick=()=>{
-  $('aiCard').classList.remove('show');
-  if($('reader').style.display!=='none'){$('reader').style.display='none';$('library').style.display='block';}
-};
-$('personaBtn').onclick=()=>$('sheetBg').classList.add('show');
-$('closeSheet').onclick=()=>$('sheetBg').classList.remove('show');
-document.querySelectorAll('.persona').forEach(b=>b.onclick=()=>{
-  persona=b.dataset.name;icon=b.dataset.icon;$('aiName').textContent=persona;$('avatar').textContent=icon;$('sheetBg').classList.remove('show');
-});
-
-$('themeBtn').onclick=()=>$('themeBg').classList.add('show');
-$('closeTheme').onclick=()=>$('themeBg').classList.remove('show');
-
-document.querySelectorAll('[data-theme]').forEach(btn=>{
- btn.onclick=()=>{
-  const t=btn.dataset.theme;
-  const root=document.documentElement;
-  if(t==='night'){
-    root.style.setProperty('--bg','#0f172a');
-    root.style.setProperty('--paper','#111827');
-    root.style.setProperty('--ink','#e5e7eb');
-    root.style.setProperty('--line','#263244');
-  }
-  if(t==='day'){
-    root.style.setProperty('--bg','#f5f8fc');
-    root.style.setProperty('--paper','#ffffff');
-    root.style.setProperty('--ink','#101827');
-  }
-  if(t==='paper'){
-    root.style.setProperty('--bg','#f5efe3');
-    root.style.setProperty('--paper','#fffaf0');
-    root.style.setProperty('--ink','#3b3025');
-  }
-  if(t==='blue'){
-    root.style.setProperty('--bg','#eff8ff');
-    root.style.setProperty('--paper','#ffffff');
-    root.style.setProperty('--ink','#12304a');
-  }
-  $('themeBg').classList.remove('show');
- }
-});
-
-// 智能提醒模拟
-setTimeout(()=>{
- if($('reader').style.display!=='none'){
-   $('message').textContent='外面的天色暗下来了，要不要切换到夜间阅读模式？';
-   $('aiCard').classList.add('show');
-   $('actions').innerHTML='<button class="primary" onclick="document.documentElement.style.setProperty(\'--bg\',\'#0f172a\');document.documentElement.style.setProperty(\'--paper\',\'#111827\');document.documentElement.style.setProperty(\'--ink\',\'#e5e7eb\');document.getElementById(\'aiCard\').classList.remove(\'show\')">🌙 切换夜间模式</button><button onclick="document.getElementById(\'aiCard\').classList.remove(\'show\')">保持</button>';
- }
-},4000);
-
-</script>
-
-<div class="sheet-bg" id="themeBg"><div class="sheet">
-<h2>阅读主题</h2>
-<p>选择你的阅读氛围，也可以开启智能切换。</p>
-<div class="grid">
-<button class="persona" data-theme="day"><b>☀️ 白天模式</b><span>清晰专注</span></button>
-<button class="persona" data-theme="night"><b>🌙 夜间模式</b><span>舒适护眼</span></button>
-<button class="persona" data-theme="paper"><b>📖 羊皮纸模式</b><span>像读实体书</span></button>
-<button class="persona" data-theme="blue"><b>🌊 海洋模式</b><span>安静放松</span></button>
+<div class="toolbar">
+<button onclick="setTheme('day')">☀️ 白天</button>
+<button onclick="setTheme('night')">🌙 夜晚</button>
+<button onclick="setTheme('paper')">📖 羊皮纸</button>
 </div>
-<button class="close" id="closeTheme">关闭</button>
-</div></div>
+
+<main>
+<h1>我的书架</h1>
+
+<div class="card">
+<h2>导入你的书</h2>
+<p>支持 TXT 文本书籍（电子书上传后保存在本地浏览器）</p>
+<input type="file" id="bookUpload" accept=".txt">
+<button onclick="loadBook()">开始阅读</button>
+</div>
+
+<div class="card">
+<h2 id="bookTitle">在文字之间</h2>
+<div id="content">请选择一本书开始阅读。</div>
+</div>
+
+<div class="card">
+<h2>✨ AI陪读设置</h2>
+<select>
+<option>温柔陪伴</option>
+<option>知性学者</option>
+<option>幽默朋友</option>
+<option>安静倾听者</option>
+</select>
+<input placeholder="AI称呼你为……">
+</div>
+
+<div class="card">
+<h2>📝 批注收藏</h2>
+<textarea placeholder="记录你的想法"></textarea>
+</div>
+</main>
+
+<script src="js/app.js"></script>
 </body>
 </html>
